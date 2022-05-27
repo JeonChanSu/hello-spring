@@ -13,5 +13,6 @@ public interface MemberRepository {
     Optional<Member> findById(Long id) throws SQLException;
     Optional<Member> findByName(String name);
     List<Member> findAll() throws SQLException;
+    /*테스트*/
 
 }
