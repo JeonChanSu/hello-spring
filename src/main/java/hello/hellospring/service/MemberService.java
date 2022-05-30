@@ -1,4 +1,4 @@
-package hello.hellospring.serivce;
+package hello.hellospring.service;
 
 
 public class MemberService {

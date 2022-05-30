@@ -1,0 +1,71 @@
+
+<!DOCTYPE HTML>
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<script>
+    $(document).ready(function () {
+        const receivedData = location.href.split('?')[1];
+        console.log(receivedData); // data
+
+// 전달받은 데이터가 한글일 경우
+        console.log(decodeURI(receivedData));
+    }
+</script>
+<body>
+<form method="post">
+    <div class="container">
+
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>이름</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <td ></td>
+                    <td><input type="text" placeholder="변경할 이름을 입력하세요"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+        <button type="submit">수정</button>
+
+    </div>
+</form>
+</body>
+<script>
+
+
+/*    function update(id){
+        alert("test"+ id);
+        $.ajax({
+            url			: "/update",
+            type		: "post",
+            contentType: 'application/json',
+            dataType:'json',
+            data: JSON.stringify(id),
+            success		: function(data){
+                console.log(data);
+
+                alert('성공적으로 수정하였습니다.');
+                location.reload();
+
+            },
+            error	: function(request,status,error){
+                console.log(error);
+                alert("오류가 발생하였습니다.");
+            }
+        )};
+
+    }*/
+</script>
+</html>

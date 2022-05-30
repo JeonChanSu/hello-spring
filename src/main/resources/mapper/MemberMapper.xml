@@ -2,10 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-        <mapper namespace="hello.hellospring.dao.MemberDao">
+        <mapper namespace="MemberDao">
 
-            <select id="findAllList" resultType="String">
+            <select id="findAllList" resultType="hello.hellospring.vo.MemberVo" >
                 SELECT ID,NAME FROM test_schema.test_table
+                /*SELECT ENGINE FROM ENGINES*/
             </select>
 
+        <select id="searchName" resultType="hello.hellospring.vo.MemberVo" >
+            <![CDATA[
+                SELECT ID,NAME FROM test_schema.test_table WHERE NAME = #{name}
+            ]]>
+            /*SELECT ENGINE FROM ENGINES*/
+        </select>
+
+    <delete id="deleteId" >
+        DELETE FROM test_schema.test_table WHERE ID = #{id}
+    </delete>
+
+    <insert id="insertName" >
+        INSERT INTO test_schema.test_table (NAME) VALUES (#{name})
+    </insert>
         </mapper>
