@@ -20,4 +20,14 @@ public class MemberVo {
 
     private Long id;
     private String name;
+
+    public String getChangeName() {
+        return changeName;
+    }
+
+    public void setChangeName(String changeName) {
+        this.changeName = changeName;
+    }
+
+    private String changeName;
 }

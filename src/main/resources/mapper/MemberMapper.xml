@@ -17,10 +17,23 @@
         </select>
 
     <delete id="deleteId" >
+ <![CDATA[
         DELETE FROM test_schema.test_table WHERE ID = #{id}
+        ]]>
     </delete>
 
     <insert id="insertName" >
+        <![CDATA[
         INSERT INTO test_schema.test_table (NAME) VALUES (#{name})
+        ]]>
     </insert>
+
+    <update id="updateName" parameterType="hashMap">
+
+        UPDATE test_schema.test_table
+        SET NAME = #{changeName}
+        WHERE NAME = #{name}
+
+    </update>
+
         </mapper>

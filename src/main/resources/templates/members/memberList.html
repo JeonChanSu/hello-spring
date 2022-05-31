@@ -3,9 +3,13 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
+</head>
 <body>
-<form method="post" action="/members/memberList">
+<form method="post" action="/members/memberList" name="testForm">
+
 <div class="container">
 
     <div>
@@ -19,14 +23,24 @@
             </thead>
             <tbody>
             <tr th:each="member : ${members}">
+
                 <td th:text="${member.id}" typeof="text"></td>
                 <!--<td th:text="${member.name}" onclick="update()" th:name="${member.name}" ></td>-->
                 <td th:text="${member.name}"></td>
-                <!--<th><button th:id= "${member.name}" onclick="update(id)">수정</button></th>
-                <th><button th:id= "${member.id}" onclick="del(id)">삭제</button></th>-->
+                <!--<td><button th:id="${member.name}" name="updateclick"type="button" onclick="updateFc(id)">수정</button></td>-->
+                <!--<input type="hidden" id="test1" name="test1" th:value="${member.name}">-->
+                <td><button th:id="${member.name}" th:name = "${member.name}" onclick="updateFc(id)"> 수정1 </button>
+
+                </td>
+                <!--<td><input id="upd" th:name="upd" type="button" th:value="${member.name}" onclick="submit2(name);return false;"></td>-->
+                <!--<td><input id="upd" th:name = "${member.name}" type="button" value="수정2" onclick="submit2(this.form,name);return false;"></td>-->
+                <!--<th><button th:id= "${member.name}" onclick="updateFc(id) ;return false;">수정</button></th>-->
+                <!--<th><button th:id="${member.name}" onclick="javascript:from.action='/updateMember';">수정</button></th>-->
+                <!--<th><button th:id= "${member.id}" onclick="del(id)">삭제</button></th>-->
                 <!--<td th:text="${member.name}" typeof="text"></td>-->
                 <!--<td> <input type="text" id="name" name="name" placeholder="수정할 이름을 입력하세요"> </td>-->
            </tr>
+            <input type="hidden" id ="testmember" name="testmember" value="123">
             </tbody>
         </table>
 
@@ -45,53 +59,25 @@
 </div>
 </form>
 </body>
-<!--<script>
+<script>
 
-    function update(id){
-        alert("진입확인"+id);
-    return;
-        $.ajax({
-            url : "update",
-            type : 'post',
-            data : {
-                name : id
-            },
-            success : function(data) {
-                alert("수정 완료하였습니다.");
-                location.href='/members'
-            },
-            error : function() {
-                alert("error");
-            }
-        });
+    function updateFc(name) {
 
+        var name2 = document.getElementById('testmember').value;
+        document.getElementById("testmember").value = name;
+
+      /*#testmember*/
+        document.testForm.action='/updateMember';
+        document.testForm.method='post';
+
+        document.testForm.submit();
 
     }
 
-    function del(id) {
-
-        alert("진입확인"+id);
-        $.ajax({
-            url : "test",
-            type: "POST",
-            contentType: 'application/json',
-            dataType:'json',
-            data : {
-                id : id
-            },
-            success : function(data) {
-                alert("삭제 완료하였습니다.");
-                location.href='/'
-            },
-            error : function() {
-                alert("error");
-            }
-        });
 
 
 
-    }
+</script>
 
-</script>-->
 
 </html>

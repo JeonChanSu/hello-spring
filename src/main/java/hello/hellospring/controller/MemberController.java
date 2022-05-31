@@ -1,6 +1,7 @@
 package hello.hellospring.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import hello.hellospring.service.Myservice;
 import hello.hellospring.vo.MemberVo;
 import org.slf4j.Logger;
@@ -8,11 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Member;
+import java.util.HashMap;
 import java.util.IllformedLocaleException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MemberController {
@@ -121,7 +125,7 @@ public class MemberController {
 
     @PostMapping("/members/memberList")
     public String deleteMember(Long id){
-        logger.info("test~~~~~~~~~~~~~~~~~~"+ id);
+        logger.info("deleteMember");
         myservice.deleteId(id);
 
         /*if(name.size() ==0) {
@@ -133,16 +137,30 @@ public class MemberController {
     }
 
 
-    @PostMapping("/update")
-    public String update(String name){
-        logger.info("test~~~~~~~~~~~~~~~~~~");
 
 
 
-        return "redirect:/";
+    @PostMapping("/updateMember")
+    public String update(HttpServletRequest request,HttpServletRequest response,Model model){
+        logger.info("update");
+        String name2 = request.getParameter("testmember");
+        String name3 = response.getParameter("testmember");
+
+        model.addAttribute("name",name2);
+        return "members/update";
     }
 
+    @PostMapping("/members/update")
+    public String updateMember(String name,String changeName){
+        logger.info("updateMember");
+        Map map = new HashMap();
+        map.put("name",name);
+        map.put("changeName",changeName);
 
+
+        myservice.updateMember(map);
+        return "redirect:/";
+    }
 
 
 
