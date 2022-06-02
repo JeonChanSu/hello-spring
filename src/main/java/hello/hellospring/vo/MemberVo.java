@@ -30,4 +30,34 @@ public class MemberVo {
     }
 
     private String changeName;
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    private int pageNum;
+
+    public int getROWNUM() {
+        return ROWNUM;
+    }
+
+    public void setROWNUM(int ROWNUM) {
+        this.ROWNUM = ROWNUM;
+    }
+
+    private  int ROWNUM;
+
+    public String getResurt() {
+        return resurt;
+    }
+
+    public void setResurt(String resurt) {
+        this.resurt = resurt;
+    }
+
+    private String resurt;
 }

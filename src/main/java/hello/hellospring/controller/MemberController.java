@@ -2,6 +2,9 @@ package hello.hellospring.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import hello.hellospring.dao.MemberDao;
+import hello.hellospring.mapper.MemberMapper;
+import hello.hellospring.paging.Criteria;
 import hello.hellospring.service.Myservice;
 import hello.hellospring.vo.MemberVo;
 import org.slf4j.Logger;
@@ -10,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.IllformedLocaleException;
@@ -61,23 +68,21 @@ public class MemberController {
     public String list(Model model){
 //        System.out.println("test1");
 
-
-
+        logger.info("list");
         List<MemberVo> members = myservice.findAllList();
+        /*List<MemberVo> members = MemberMapper.findAllList();*/
+
         model.addAttribute("members",members);
 
         return "members/memberList";
     }
 
-/*    @RequestMapping("members/memberSearch")
-    public String searchName(Model model){
-//        System.out.println("test1");
-        logger.info("test1");
+/*    @GetMapping(value = "/board/list.do")
+    public String openBoardList(@ModelAttribute("criteria") Criteria criteria, Model model) {
+        List<MemberVo> boardList = boardService.getBoardList(criteria);
+        model.addAttribute("boardList", boardList);
 
-        String members = myservice.searchName("name");
-        model.addAttribute("members",members);
-
-        return "members/memberList";
+        return "board/list";
     }*/
 
 
@@ -88,20 +93,40 @@ public class MemberController {
     }
 
     @PostMapping("/members/createMemberFrom")
-    public String create(String name){
+    public String create(String newName, HttpServletResponse response) throws IOException {
+        logger.info("createFormController");
 
-        logger.info("createFormController1");
-        List<MemberVo> names = myservice.SearchName(name);
-        logger.info("createFormController2");
+
+        List<MemberVo> names = myservice.SearchName(newName);
+
 
         if(names.size() == 0){
-            myservice.create(name);
+            myservice.create(newName);
             return "redirect:/";
         }else{
+            logger.info("names size1");
+            /*model.addAttribute("resurt","중복된 이름입니다.");*/
+            logger.info("names size3");
+            init(response);
+            PrintWriter viewout = response.getWriter();
+
+            viewout.println("<script>alert('중복된 이름입니다.');</script>");
+
+            /*ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("중복된 이름입니다.");
+            modelAndView.addObject("respose");*/
+            
             return "members/createMemberFrom";
         }
 
     }
+
+    public static void init(HttpServletResponse response)
+    {
+        response.setContentType("text/html; charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+    }
+
 
     @RequestMapping("/members/memberSearch")
     public String SearchForm(){
@@ -144,7 +169,6 @@ public class MemberController {
     public String update(HttpServletRequest request,HttpServletRequest response,Model model){
         logger.info("update");
         String name2 = request.getParameter("testmember");
-        String name3 = response.getParameter("testmember");
 
         model.addAttribute("name",name2);
         return "members/update";
@@ -153,6 +177,10 @@ public class MemberController {
     @PostMapping("/members/update")
     public String updateMember(String name,String changeName){
         logger.info("updateMember");
+        if("".equals(changeName)|| changeName==null){
+            return "redirect:/";
+        }
+
         Map map = new HashMap();
         map.put("name",name);
         map.put("changeName",changeName);
@@ -161,6 +189,8 @@ public class MemberController {
         myservice.updateMember(map);
         return "redirect:/";
     }
+
+
 
 
 

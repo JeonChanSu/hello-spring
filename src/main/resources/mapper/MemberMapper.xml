@@ -5,9 +5,16 @@
         <mapper namespace="MemberDao">
 
             <select id="findAllList" resultType="hello.hellospring.vo.MemberVo" >
-                SELECT ID,NAME FROM test_schema.test_table
+                SELECT ID,NAME,@ROWNUM := @ROWNUM+1 AS ROWNUM FROM test_schema.test_table,(SELECT @ROWNUM := 0) R
                 /*SELECT ENGINE FROM ENGINES*/
             </select>
+
+<!--        <select id="findAllListCount" parameterType="Criteria" resultType="int">
+            SELECT
+                COUNT(*) CNT
+            FROM
+                test_schema.test_table
+        </select>-->
 
         <select id="searchName" resultType="hello.hellospring.vo.MemberVo" >
             <![CDATA[

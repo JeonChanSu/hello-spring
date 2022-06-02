@@ -1,20 +1,64 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+    $(document).ready(function(){
 
+        if(""!=document.getElementById("resurt").value){
+            alert("진입테스트");
+        }
+
+        document.getElementById("newName").focus();
+    });
+
+</script>
+</head>
 <body>
 
 <div class="container">
-    <form action="/members/createMemberFrom" method="post">
+    <form action="/members/createMemberFrom" name="create" method="post" onSubmit="return false;">
         <div class="form-group">
-            <label for="name">이름</label>
-            <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+            <label >이름</label>
+            <input type="text" id="newName" name="newName" placeholder="이름을 입력하세요">
         </div>
 
-        <button type="submit">등록</button>
-
+        <button onclick="createId()">등록</button>
+    <input type="hidden" id = "resurt" name="resurt" value="">
     </form>
 </div> <!--/container-->
 
 
 </body>
+<script>
+
+    function createId(){
+        let checkId = document.getElementById("newName").value.replace(/(\s*)/g, ""); //전체공백제거
+        document.getElementById("newName").value = checkId;
+
+        if(!document.getElementById("newName").value.replace(/(\s*)/g, "")){
+            alert("이름을 확인하세요");
+            document.getElementById("newName").focus();
+
+        }else{
+            if(!textCheck(checkId)){
+                alert("특수문자는 입력이 불가합니다.");
+            }else{
+                document.create.submit();
+            }
+        }
+    }
+
+
+    function textCheck(str){
+        var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        //특수문자 검증
+        if(reg.test(str)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+
 </html>
