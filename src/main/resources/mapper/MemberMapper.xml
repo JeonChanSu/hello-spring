@@ -4,9 +4,16 @@
 
         <mapper namespace="MemberDao">
 
-            <select id="findAllList" resultType="hello.hellospring.vo.MemberVo" >
-                SELECT ID,NAME,@ROWNUM := @ROWNUM+1 AS ROWNUM FROM test_schema.test_table,(SELECT @ROWNUM := 0) R
-                /*SELECT ENGINE FROM ENGINES*/
+            <select id="findAllList" parameterType="hello.hellospring.vo.MemberVo" resultType="hello.hellospring.vo.MemberVo" >
+                SELECT BOARDID
+                       ,TITLE
+                       ,CONTENT
+                       ,writer
+                       ,DATE_FORMAT(insertTime,'%Y-%m-%d %H:%i:%s') insertTime
+                       ,DATE_FORMAT(deleteTime,'%Y-%m-%d') deleteTime
+                FROM test_schema.test_table
+                LIMIT #{paginationInfo.firstRecordIndex}, #{recordsPerPage}
+
             </select>
 
 <!--        <select id="findAllListCount" parameterType="Criteria" resultType="int">
@@ -18,7 +25,7 @@
 
         <select id="searchName" resultType="hello.hellospring.vo.MemberVo" >
             <![CDATA[
-                SELECT ID,NAME FROM test_schema.test_table WHERE NAME = #{name}
+                SELECT BOARDID,NAME FROM test_schema.test_table WHERE NAME = #{name}
             ]]>
             /*SELECT ENGINE FROM ENGINES*/
         </select>
@@ -30,9 +37,9 @@
     </delete>
 
     <insert id="insertName" >
-        <![CDATA[
+
         INSERT INTO test_schema.test_table (NAME) VALUES (#{name})
-        ]]>
+
     </insert>
 
     <update id="updateName" parameterType="hashMap">
@@ -42,5 +49,48 @@
         WHERE NAME = #{name}
 
     </update>
+    <select id="findAllListCount"   resultType="int">
+        SELECT
+            COUNT(*) cnt
+        FROM
+            test_schema.test_table
+    </select>
+
+    <!--writeSave-->
+    <insert id="writeSave" parameterType="hashMap">
+        INSERT INTO test_schema.test_table (title,writer,content,insertTime) VALUES (#{title},#{writer},#{content},current_timestamp)
+    </insert>
+
+    <!--상세보기-->
+    <select id="writeView" parameterType="hashMap" resultType="hashMap">
+        SELECT
+            BOARDID
+             ,TITLE
+             ,CONTENT
+             ,writer
+             ,DATE_FORMAT(insertTime,'%Y-%m-%d %H:%i:%s') insertTime
+             ,DATE_FORMAT(deleteTime,'%Y-%m-%d') deleteTime
+        FROM
+            test_schema.test_table
+        WHERE
+            ID = #{id}
+    </select>
+
+    <select id="testList" parameterType="hello.hellospring.vo.MemberVo" resultType="hello.hellospring.vo.MemberVo" >
+        SELECT BOARDID
+             ,TITLE
+             ,CONTENT
+             ,writer
+             ,DATE_FORMAT(insertTime,'%Y-%m-%d %H:%i:%s') insertTime
+             ,DATE_FORMAT(deleteTime,'%Y-%m-%d') deleteTime
+        FROM test_schema.test_table
+                 LIMIT #{paginationInfo.firstRecordIndex}, #{recordsPerPage}
+
+    </select>
+
+
+
+
 
         </mapper>
+

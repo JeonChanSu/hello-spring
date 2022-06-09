@@ -5,9 +5,9 @@
 <script>
     $(document).ready(function(){
 
-        if(""!=document.getElementById("resurt").value){
-            alert("진입테스트");
-        }
+/*        if(""!=document.getElementById("resurt").value){
+
+        }*/
 
         document.getElementById("newName").focus();
     });
@@ -24,10 +24,12 @@
         </div>
 
         <button onclick="createId()">등록</button>
-    <input type="hidden" id = "resurt" name="resurt" value="">
+    <!--<input type="hidden" id = "resurt" name="resurt" value="">-->
     </form>
 </div> <!--/container-->
-
+<div>
+    <button><a href="/">홈으로</a></button>
+</div>
 
 </body>
 <script>
@@ -43,6 +45,7 @@
         }else{
             if(!textCheck(checkId)){
                 alert("특수문자는 입력이 불가합니다.");
+                document.getElementById("newName").value="";
             }else{
                 document.create.submit();
             }

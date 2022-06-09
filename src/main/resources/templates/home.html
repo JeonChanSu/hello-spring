@@ -1,20 +1,56 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <meta charset="UTF-8">
+</head>
 <body>
 
 <div>
     <div>
-        <h1>Hello Spring</h1>
-        <p>회원기능</p>
+        <h1>Test Spring</h1>
+        <p>고고싱</p>
         <p>
-            <a href="/members/new">회원가입</a>
-            <a href="/members/">회원목록</a>
+            <!--<a href="/members/new">글작성</a>-->
+            <!--<a href="/members/">글목록</a>-->
+            <button onclick="callList()">목록</button>
             <!--<a href="/members/memberSearch">회원검색</a>-->
         </p>
     </div>
 </div>
 
-
 </body>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+function callList(){
+
+    var sendData= {
+        "currentPageNo":"1",
+        "recordsPerPage":"10",
+        "pageSize":"10",
+
+    };
+
+    $.ajax({
+        url			: "/boardListView",
+        type		: "GET",
+        contentType: 'application/json',
+        dataType:'json',
+        data: JSON.stringify(encodeURI(sendData)),
+        success		: function(data){
+            console.log(data);
+            /*location.reload();*/
+            location.href="/boardListView"
+
+
+        },
+        error	: function(request,status,error){
+            console.log(error);
+            alert("오류");
+        }
+    });
+
+}
+
+
+</script>
 </html>

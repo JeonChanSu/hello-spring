@@ -1,4 +1,5 @@
 var pagingObj = {};
+/*
 
 (function(){
     pagingObj.dataPerPage = 10;     // 한 페이지에 나타낼 데이터 수
@@ -7,14 +8,14 @@ var pagingObj = {};
     pagingObj.next = 0;             // 다음 페이지 값
     pagingObj.windowWidth = 530;    // 모바일 / PC 확인을 위한 window size
 
-    /**
+    /!**
      * 페이징 처리
      * @param target       = 처리한 페이징 내용을 넣을 대상
      * @param totalDataCnt = 전체 데이터 개수
      * @param pagingData   = 데이터 리스트
      * @param currentPage  = 현재 페이지 번호
      * @param callback     = callback 함수
-     */
+     *!/
     window.paging = window.customPaging = function(target, totalDataCnt, pagingData, currentPage, callback){
         var windowSize = window.innerWidth; // PC / 모바일 구분을 위한 윈도우 사이즈 측정
 
@@ -117,3 +118,4 @@ var pagingObj = {};
         else $(target).hide();
     };
 })(window);
+*/

@@ -1,63 +1,59 @@
 package hello.hellospring.vo;
 
-public class MemberVo {
+import hello.hellospring.paging.Criteria;
+import hello.hellospring.paging.PaginationInfo;
+import lombok.Getter;
+import lombok.Setter;
 
-    public Long getId() {
-        return id;
-    }
+import java.time.LocalDateTime;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+@Getter
+@Setter
+public class MemberVo extends Criteria {
 
     private Long id;
+
+    private Long boardId;
+
     private String name;
 
-    public String getChangeName() {
-        return changeName;
-    }
+    /** 번호 (PK) */
+    private Long idx;
 
-    public void setChangeName(String changeName) {
-        this.changeName = changeName;
-    }
+    /** 제목 */
+    private String title;
 
-    private String changeName;
+    /** 내용 */
+    private String content;
 
-    public int getPageNum() {
-        return pageNum;
-    }
+    /** 작성자 */
+    private String writer;
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
+    /** 조회 수 */
+    private int viewCnt;
 
-    private int pageNum;
+    /** 공지 여부 */
+    private String noticeYn;
 
-    public int getROWNUM() {
-        return ROWNUM;
-    }
+    /** 비밀 여부 */
+    private String secretYn;
 
-    public void setROWNUM(int ROWNUM) {
-        this.ROWNUM = ROWNUM;
-    }
+    private PaginationInfo paginationInfo;
 
-    private  int ROWNUM;
+    /** 삭제 여부 */
+    private String deleteYn;
 
-    public String getResurt() {
-        return resurt;
-    }
+    /** 등록일 */
+    private String insertTime;
 
-    public void setResurt(String resurt) {
-        this.resurt = resurt;
-    }
+    /** 수정일 */
+    private String updateTime;
 
-    private String resurt;
+    /** 삭제일 */
+    private String deleteTime;
+
+    /*행번호*/
+    private int rownum;
+
+
 }

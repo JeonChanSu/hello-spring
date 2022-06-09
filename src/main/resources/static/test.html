@@ -1,60 +1,34 @@
 <!DOCTYPE HTML>
-
-
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <meta charset="UTF-8">
+</head>
 
 <body>
-<form method="post">
-    <div class="container">
+<table style="height: 300px;width: 300px;">
+    <tr>
+        <td>제목</td>
+        <td><input type="text" name="title" style="height: 50%" placeholder="제목을 입력하세요"></td>
+    </tr>
+    <tr>
+        <td>이름</td>
+        <td><input type="text" name="writer" style="height: 50%" placeholder="이름을 입력하세요"></td>
+    </tr>
+<!--    <tr>
+        <td>비밀번호</td>
+        <td><input type="password" name="password" placeholder="비밀번호를 입력하세요"></td>
+    </tr>-->
+    <tr style="height: 150px">
+        <td >내용</td>
+        <td>
+            <textarea name="content" placeholder="내용을 입력하세요" style="width: 100%;height: 80%;resize: none"></textarea>  <!--input 박스는 너무 작다. 내용 작성란을 만들때는 textarea엘리먼트 사용-->
+        </td>
+    </tr>
+</table>
+<button onclick="saveContent()"> 저장 </button>
 
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>이름</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr >
-                    <td th:text="${member.name}"></td>
-                    <td><input type="text" placeholder="변경할 이름을 입력하세요"></td>
-                </tr>
-                </tbody>
-            </table>
-
-
-        </div>
-
-
-        <button type="submit">수정</button>
-
-    </div>
-</form>
 </body>
-<script>/*
 
-    function update(id){
-        alert("test"+ id);
-        $.ajax({
-            url			: "/update",
-            type		: "post",
-            contentType: 'application/json',
-            dataType:'json',
-            data: JSON.stringify(id),
-            success		: function(data){
-                console.log(data);
 
-                alert('성공적으로 수정하였습니다.');
-                location.reload();
-
-            },
-            error	: function(request,status,error){
-                console.log(error);
-                alert("오류가 발생하였습니다.");
-            }
-        )};
-
-    }*/
-</script>
 </html>

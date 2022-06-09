@@ -15,6 +15,13 @@
         <!--<button type="button" class="updateGo" >수정</button>-->
     </form>
 </div> <!--/container-->
+<div>
+    <button><a href="/">홈으로</a></button>
+</div>
+
+</body>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 
@@ -26,33 +33,28 @@
         let test2 = document.getElementById("changeName").value.trim(); //앞뒤 공백 제거
 
         document.getElementById("changeName").value = checkId;
-            if(!document.getElementById("changeName").value.replace(/(\s*)/g, "")){
-                alert("변경할 이름을 확인하세요");
-                document.getElementById("changeName").focus();
+        if(!document.getElementById("changeName").value.replace(/(\s*)/g, "")){
+            alert("변경할 이름을 확인하세요");
+            document.getElementById("changeName").focus();
 
+        }else{
+            if(!textCheck(checkId)){
+                alert("특수문자는 입력이 불가합니다.");
             }else{
-                if(!textCheck(checkId)){
-                    alert("특수문자는 입력이 불가합니다.");
-                }else{
-                    document.changeUpdate.submit();
-                }
+                document.changeUpdate.submit();
             }
+        }
     }
 
-function textCheck(str){
-    var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
-    //특수문자 검증
-    if(reg.test(str)){
-        return false;
-    }else{
-        return true;
+    function textCheck(str){
+        var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        //특수문자 검증
+        if(reg.test(str)){
+            return false;
+        }else{
+            return true;
+        }
     }
-}
-
-
-
-
 
 </script>
-</body>
 </html>
