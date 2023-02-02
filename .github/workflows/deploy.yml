@@ -1,41 +1,57 @@
-name: CI-CD 
+name: CI-CD
 
 on:
-push:
-branches:
-- release 
+  push:
+    branches:
+      - master
 
 env:
-S3_BUCKET_NAME: kiosk-s3
-CODE_DEPLOY_APPLICATION_NAME: node-deploy-pipe-codeDeploy-app
-CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: 	node-deploy-pipe
+  S3_BUCKET_NAME: chansutestbuket
+  CODE_DEPLOY_APPLICATION_NAME: codeDeployUser
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: codeDeployUserGroup
 
-jobs:
-build:
-runs-on: ubuntu-latest 
+#    strategy:
+#      matrix:
+#        node-version: [18.x]
 
-steps:
-  - name: Checkout 
-    uses: actions/checkout@v3 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-  - name: Make zip file 
-    run: zip -r ./dataSource.zip . 
-    shell: bash
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#          cache: 'npm'
 
-  - name: Configure AWS credentials 
-    uses: aws-actions/configure-aws-credentials@v1 
-    with:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-      aws-region: ${{ secrets.AWS_REGION }}
+      #- name: npm install
+      #  run: npm install
 
-  - name: Upload to S3 
-    run: aws s3 cp --region ap-northeast-2 ./dataSource.zip s3://$S3_BUCKET_NAME/dataSource.zip 
+      #- name: run test code
+      #  run: npm test
 
-  - name: Code Deploy 
-    run: | 
-      aws deploy create-deployment \\
-      --deployment-config-name CodeDeployDefault.AllAtOnce \\
-      --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \\
-      --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \\
-      --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=dataSource.zip
+      - name: Make zip file
+        run: zip -r ./testDataSource.zip .
+        shell: bash
+        if: success()
+
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ secrets.AWS_REGION }}
+#
+#      - name: Upload Data Source to S3
+#        run: aws s3 cp --region ap-northeast-2 ./userDataSource.zip s3://$S3_BUCKET_NAME/userDataSource.zip
+#
+#      - name: CloudFront Create Invalidation
+#        run: aws cloudfront create-invalidation --distribution-id E3T0XO6NY1KIEH --paths "/*"
+#
+#      - name: Code Deploy
+#        run: |
+#          aws deploy create-deployment \
+#          --deployment-config-name CodeDeployDefault.AllAtOnce \
+#          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+#          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+#          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=userDataSource.zip
